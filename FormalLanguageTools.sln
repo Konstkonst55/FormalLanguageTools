@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.ArithmeticParser", "FormalLanguageTools.ArithmeticParser\FormalLanguageTools.ArithmeticParser.csproj", "{DF93F0F2-F8FA-020E-DF77-C919C8DFCD7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.Shared", "FormalLanguageTools.Shared\FormalLanguageTools.Shared.csproj", "{A28D6020-6EBE-EF7D-91A7-45A2090CB8F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.TestBench", "FormalLanguageTools.TestBench\FormalLanguageTools.TestBench.csproj", "{F1C9925F-4B63-96E9-EF29-68334DA751BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF93F0F2-F8FA-020E-DF77-C919C8DFCD7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF93F0F2-F8FA-020E-DF77-C919C8DFCD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF93F0F2-F8FA-020E-DF77-C919C8DFCD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF93F0F2-F8FA-020E-DF77-C919C8DFCD7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28D6020-6EBE-EF7D-91A7-45A2090CB8F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28D6020-6EBE-EF7D-91A7-45A2090CB8F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28D6020-6EBE-EF7D-91A7-45A2090CB8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28D6020-6EBE-EF7D-91A7-45A2090CB8F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C9925F-4B63-96E9-EF29-68334DA751BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C9925F-4B63-96E9-EF29-68334DA751BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C9925F-4B63-96E9-EF29-68334DA751BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C9925F-4B63-96E9-EF29-68334DA751BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A48062A5-DB30-4611-8206-41497374DD4C}
+	EndGlobalSection
+EndGlobal
