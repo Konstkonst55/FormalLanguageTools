@@ -1,14 +1,15 @@
+using FormalLanguageTools.ArithmeticParser.DataClasses;
 using FormalLanguageTools.ArithmeticParser.Interfaces;
 
 namespace FormalLanguageTools.ArithmeticParser.Classes;
 
 public sealed class ArithmeticExpressionParser : IArithmeticExpressionParser
 {
-    public void Parse(string expression)
+    public SyntaxNode Parse(string expression)
     {
         ArgumentNullException.ThrowIfNull(expression);
         var tokens = Lexer.Tokenize(expression);
         var parser = new RecursiveDescentParser(tokens);
-        parser.Parse();
+        return parser.Parse();
     }
 }

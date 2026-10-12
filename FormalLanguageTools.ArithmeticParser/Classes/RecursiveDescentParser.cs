@@ -23,59 +23,97 @@ internal sealed class RecursiveDescentParser
 
     private Token Current => _tokens[_position];
 
-    public void Parse()
+    public SyntaxNode Parse()
     {
-        ParseExpression();
+        var root = ParseExpression();
         Match(TokenType.EndOfInput);
+        return root;
     }
 
-    private void ParseExpression()
+    private SyntaxNode ParseExpression()
     {
-        ParseTerm();
-        ParseExpressionPrime();
+        var term = ParseTerm();
+        var expressionPrime = ParseExpressionPrime();
+        return new SyntaxNode("E", children: new[] { term, expressionPrime });
     }
 
-    private void ParseExpressionPrime()
+    private SyntaxNode ParseExpressionPrime()
     {
+        var suffixes = new List<(SyntaxNode Operator, SyntaxNode Term)>();
         while (Current.Type is TokenType.Plus or TokenType.Minus)
         {
-            Advance();
-            ParseTerm();
+            var operation = ConsumeTerminal(Current.Type);
+            var term = ParseTerm();
+            suffixes.Add((operation, term));
         }
+
+        SyntaxNode result = new("E'", children: new[] { new SyntaxNode("ε") });
+        for (var index = suffixes.Count - 1; index >= 0; index--)
+        {
+            result = new SyntaxNode("E'", children: new[] { suffixes[index].Operator, suffixes[index].Term, result });
+        }
+
+        return result;
     }
 
-    private void ParseTerm()
+    private SyntaxNode ParseTerm()
     {
-        ParseFactor();
-        ParseTermPrime();
+        var factor = ParseFactor();
+        var termPrime = ParseTermPrime();
+        return new SyntaxNode("T", children: new[] { factor, termPrime });
     }
 
-    private void ParseTermPrime()
+    private SyntaxNode ParseTermPrime()
     {
+        var suffixes = new List<(SyntaxNode Operator, SyntaxNode Factor)>();
         while (Current.Type is TokenType.Multiply or TokenType.Divide)
         {
-            Advance();
-            ParseFactor();
+            var operation = ConsumeTerminal(Current.Type);
+            var factor = ParseFactor();
+            suffixes.Add((operation, factor));
         }
+
+        SyntaxNode result = new("T'", children: new[] { new SyntaxNode("ε") });
+        for (var index = suffixes.Count - 1; index >= 0; index--)
+        {
+            result = new SyntaxNode("T'", children: new[] { suffixes[index].Operator, suffixes[index].Factor, result });
+        }
+
+        return result;
     }
 
-    private void ParseFactor()
+    private SyntaxNode ParseFactor()
     {
         if (Current.Type is TokenType.Number or TokenType.Identifier)
         {
-            Advance();
-            return;
+            var tokenType = Current.Type;
+            var terminal = ConsumeTerminal(tokenType);
+            return new SyntaxNode("F", children: new[] { terminal });
         }
 
         if (Current.Type == TokenType.LeftParenthesis)
         {
-            Advance();
-            ParseExpression();
-            Match(TokenType.RightParenthesis);
-            return;
+            var leftParenthesis = ConsumeTerminal(TokenType.LeftParenthesis);
+            var expression = ParseExpression();
+            var rightParenthesis = ConsumeTerminal(TokenType.RightParenthesis);
+            return new SyntaxNode("F", children: new[] { leftParenthesis, expression, rightParenthesis });
         }
 
         throw CreateSyntaxException("number", "id", "'('");
+    }
+
+    private SyntaxNode ConsumeTerminal(TokenType expectedType)
+    {
+        if (Current.Type != expectedType)
+        {
+            throw CreateSyntaxException(DescribeTokenType(expectedType));
+        }
+
+        var token = Current;
+        Advance();
+        var name = DescribeTreeTerminal(token.Type);
+        var value = token.Type is TokenType.Number or TokenType.Identifier ? token.Value : null;
+        return new SyntaxNode(name, value);
     }
 
     private void Match(TokenType expectedType)
@@ -83,11 +121,6 @@ internal sealed class RecursiveDescentParser
         if (Current.Type != expectedType)
         {
             throw CreateSyntaxException(DescribeTokenType(expectedType));
-        }
-
-        if (expectedType != TokenType.EndOfInput)
-        {
-            Advance();
         }
     }
 
@@ -122,6 +155,22 @@ internal sealed class RecursiveDescentParser
             TokenType.LeftParenthesis => "'('",
             TokenType.RightParenthesis => "')'",
             TokenType.EndOfInput => "конец выражения",
+            _ => throw new ArgumentOutOfRangeException(nameof(tokenType), tokenType, null)
+        };
+    }
+
+    private static string DescribeTreeTerminal(TokenType tokenType)
+    {
+        return tokenType switch
+        {
+            TokenType.Number => "number",
+            TokenType.Identifier => "id",
+            TokenType.Plus => "+",
+            TokenType.Minus => "-",
+            TokenType.Multiply => "*",
+            TokenType.Divide => "/",
+            TokenType.LeftParenthesis => "(",
+            TokenType.RightParenthesis => ")",
             _ => throw new ArgumentOutOfRangeException(nameof(tokenType), tokenType, null)
         };
     }
