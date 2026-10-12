@@ -1,0 +1,130 @@
+<UserControl x:Class="FormalLanguageTools.App.Views.ArithmeticParserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderBrush" Value="#D0D5DD" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F2F4F7" />
+            <Setter Property="Foreground" Value="#475467" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="9,8" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="BorderBrush" Value="#E4E7EC" />
+        </Style>
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Background" Value="White" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsError}" Value="True">
+                    <Setter Property="Foreground" Value="#B42318" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="7" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,2,0,13" LastChildFill="False">
+            <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
+                <TextBlock Text="Арифметические выражения" FontSize="20" FontWeight="SemiBold" Foreground="#182230" />
+                <TextBlock Margin="0,4,0,0" Text="Вводите по одному выражению на строку или загрузите текстовый файл" FontSize="12" Foreground="#667085" />
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Content="Открыть файл" Command="{Binding OpenFileCommand}" />
+                <Button Content="Проверить всё" Command="{Binding CheckCommand}" Background="#3157C8" Foreground="White" BorderBrush="#3157C8" FontWeight="SemiBold" />
+                <Button Content="Очистить" Command="{Binding ClearCommand}" />
+            </StackPanel>
+        </DockPanel>
+
+        <Border Grid.Row="1" BorderBrush="#DCE2EC" BorderThickness="1" CornerRadius="8" Background="#FFFFFF" Padding="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border Background="#F8FAFC" BorderBrush="#E4E7EC" BorderThickness="0,0,0,1" Padding="12,8" CornerRadius="7,7,0,0">
+                    <DockPanel>
+                        <TextBlock Text="РЕДАКТОР" FontSize="10" FontWeight="SemiBold" Foreground="#667085" />
+                    </DockPanel>
+                </Border>
+                <Grid Grid.Row="1">
+                    <avalonedit:TextEditor x:Name="ExpressionEditor"
+                                           ShowLineNumbers="True"
+                                           FontFamily="Consolas"
+                                           FontSize="14"
+                                           Padding="8"
+                                           WordWrap="False"
+                                           HorizontalScrollBarVisibility="Auto"
+                                           VerticalScrollBarVisibility="Auto"
+                                           Background="White"
+                                           Foreground="#101828"
+                                           LineNumbersForeground="#98A2B3"
+                                           BorderThickness="0" />
+                </Grid>
+            </Grid>
+        </Border>
+
+        <GridSplitter Grid.Row="2" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Transparent" Cursor="SizeNS" />
+
+        <Grid Grid.Row="3" Margin="0,7,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <DockPanel Margin="1,0,1,8">
+                <TextBlock Text="Результаты проверки" FontSize="14" FontWeight="SemiBold" Foreground="#182230" />
+            </DockPanel>
+            <DataGrid x:Name="DiagnosticsGrid"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Diagnostics}"
+                      SelectedItem="{Binding SelectedDiagnostic, Mode=TwoWay}"
+                      SelectionChanged="DiagnosticsGrid_OnSelectionChanged"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      CanUserResizeRows="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#EAECF0"
+                      VerticalGridLinesBrush="#F2F4F7"
+                      Background="White"
+                      BorderBrush="#DCE2EC"
+                      BorderThickness="1"
+                      RowHeaderWidth="0"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Строка" Binding="{Binding LineNumber}" Width="65"/>
+                    <DataGridTextColumn Header="Столбец" Binding="{Binding Column}" Width="75" />
+                    <DataGridTextColumn Header="Выражение" Binding="{Binding Expression}" Width="2*" />
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="175" />
+                    <DataGridTextColumn Header="Диагностика" Binding="{Binding Message}" Width="3*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Border Grid.Row="4" Margin="0,11,0,0" Background="#F8FAFC" BorderBrush="#E4E7EC" BorderThickness="1" CornerRadius="6" Padding="10,7">
+            <TextBlock Text="{Binding Status}" FontSize="11" Foreground="#475467" />
+        </Border>
+    </Grid>
+</UserControl>
