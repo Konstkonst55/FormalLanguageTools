@@ -103,6 +103,22 @@ public partial class ArithmeticParserView : UserControl
         _errorHighlightRenderer.SetErrorLocations(locations);
     }
 
+
+    private void ShowTreeButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var diagnostic = _viewModel?.SelectedDiagnostic;
+        if (diagnostic is null || diagnostic.IsError || diagnostic.SyntaxTree is null)
+        {
+            return;
+        }
+
+        var window = new SyntaxTreeWindow(diagnostic.SyntaxTree, diagnostic.Expression, diagnostic.LineNumber)
+        {
+            Owner = Window.GetWindow(this)
+        };
+        window.ShowDialog();
+    }
+
     private void DiagnosticsGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (DiagnosticsGrid.SelectedItem is not ExpressionDiagnostic diagnostic)

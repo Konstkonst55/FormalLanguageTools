@@ -1,3 +1,5 @@
+using FormalLanguageTools.ArithmeticParser.DataClasses;
+
 namespace FormalLanguageTools.App.Models;
 
 public sealed record ExpressionDiagnostic(
@@ -6,4 +8,5 @@ public sealed record ExpressionDiagnostic(
     string Expression,
     string Status,
     string Message,
-    bool IsError);
+    bool IsError,
+    SyntaxNode? SyntaxTree = null);

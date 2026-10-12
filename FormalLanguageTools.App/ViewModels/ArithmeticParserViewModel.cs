@@ -79,8 +79,11 @@ public sealed class ArithmeticParserViewModel : INotifyPropertyChanged
 
             _selectedDiagnostic = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(CanShowTree));
         }
     }
+
+    public bool CanShowTree => SelectedDiagnostic is { IsError: false, SyntaxTree: not null };
 
     public RelayCommand OpenFileCommand { get; }
 
@@ -126,8 +129,8 @@ public sealed class ArithmeticParserViewModel : INotifyPropertyChanged
             checkedCount++;
             try
             {
-                _parser.Parse(expression);
-                Diagnostics.Add(new ExpressionDiagnostic(index + 1, 1, expression, "Корректно", "Синтаксических ошибок не обнаружено.", false));
+                var syntaxTree = _parser.Parse(expression);
+                Diagnostics.Add(new ExpressionDiagnostic(index + 1, 1, expression, "Корректно", "Синтаксических ошибок не обнаружено.", false, syntaxTree));
             }
             catch (FormalLanguageException exception)
             {
@@ -145,7 +148,7 @@ public sealed class ArithmeticParserViewModel : INotifyPropertyChanged
         }
 
         Status = $"Проверено выражений: {checkedCount}. Ошибок: {errorCount}.";
-        SelectedDiagnostic = Diagnostics.FirstOrDefault(diagnostic => diagnostic.IsError) ?? Diagnostics.FirstOrDefault();
+        SelectedDiagnostic = Diagnostics.FirstOrDefault(diagnostic => !diagnostic.IsError) ?? Diagnostics.FirstOrDefault();
     }
 
     private void Clear()

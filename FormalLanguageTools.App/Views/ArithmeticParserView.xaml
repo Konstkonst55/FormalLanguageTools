@@ -51,6 +51,7 @@
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                 <Button Content="Открыть файл" Command="{Binding OpenFileCommand}" />
                 <Button Content="Проверить всё" Command="{Binding CheckCommand}" Background="#3157C8" Foreground="White" BorderBrush="#3157C8" FontWeight="SemiBold" />
+                <Button Content="Дерево разбора" IsEnabled="{Binding CanShowTree}" Click="ShowTreeButton_OnClick" />
                 <Button Content="Очистить" Command="{Binding ClearCommand}" />
             </StackPanel>
         </DockPanel>
@@ -112,9 +113,10 @@
                       BorderThickness="1"
                       RowHeaderWidth="0"
                       SelectionMode="Single"
-                      SelectionUnit="FullRow">
+                      SelectionUnit="FullRow"
+                      MouseDoubleClick="ShowTreeButton_OnClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Строка" Binding="{Binding LineNumber}" Width="65"/>
+                    <DataGridTextColumn Header="Строка" Binding="{Binding LineNumber}" Width="65" />
                     <DataGridTextColumn Header="Столбец" Binding="{Binding Column}" Width="75" />
                     <DataGridTextColumn Header="Выражение" Binding="{Binding Expression}" Width="2*" />
                     <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="175" />
