@@ -84,4 +84,49 @@ public sealed class ArithmeticExpressionParserTests
         Assert.AreEqual(3, exception.Position.Column);
         Assert.AreEqual("конец выражения", exception.ExpectedTokens.Single());
     }
+
+    [TestMethod]
+    public void Parse_ValidExpression_ReturnsFullParseTreeWithOperatorPrecedence()
+    {
+        var root = _parser.Parse("2 + 3 * 4");
+
+        Assert.AreEqual("E", root.Name);
+        Assert.AreEqual("T", root.Children[0].Name);
+        Assert.AreEqual("E'", root.Children[1].Name);
+
+        var expressionPrime = root.Children[1];
+        Assert.AreEqual("+", expressionPrime.Children[0].Name);
+        var rightTerm = expressionPrime.Children[1];
+        Assert.AreEqual("T", rightTerm.Name);
+        Assert.AreEqual("*", rightTerm.Children[1].Children[0].Name);
+        Assert.AreEqual("4", rightTerm.Children[1].Children[1].Children[0].Value);
+        Assert.AreEqual("ε", rightTerm.Children[1].Children[2].Children[0].Name);
+        Assert.AreEqual("ε", expressionPrime.Children[2].Children[0].Name);
+    }
+
+    [TestMethod]
+    public void Parse_ParenthesizedExpression_PreservesParenthesesInTree()
+    {
+        var root = _parser.Parse("(a + b) * 2");
+        var factor = root.Children[0].Children[0];
+
+        Assert.AreEqual("F", factor.Name);
+        Assert.AreEqual("(", factor.Children[0].Name);
+        Assert.AreEqual("E", factor.Children[1].Name);
+        Assert.AreEqual(")", factor.Children[2].Name);
+        Assert.AreEqual("id", factor.Children[1].Children[0].Children[0].Children[0].Name);
+        Assert.AreEqual("a", factor.Children[1].Children[0].Children[0].Children[0].Value);
+    }
+
+    [TestMethod]
+    public void Parse_SimpleExpression_ReturnsEpsilonProductions()
+    {
+        var root = _parser.Parse("42");
+        var term = root.Children[0];
+
+        Assert.AreEqual("number", term.Children[0].Children[0].Name);
+        Assert.AreEqual("42", term.Children[0].Children[0].Value);
+        Assert.AreEqual("ε", root.Children[1].Children[0].Name);
+        Assert.AreEqual("ε", term.Children[1].Children[0].Name);
+    }
 }
