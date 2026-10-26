@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.App", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.Tests", "FormalLanguageTools.Tests\FormalLanguageTools.Tests.csproj", "{69797D8D-22D5-2DD5-A856-036933E55060}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.FiniteAutomata", "FormalLanguageTools.FiniteAutomata\FormalLanguageTools.FiniteAutomata.csproj", "{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{69797D8D-22D5-2DD5-A856-036933E55060}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69797D8D-22D5-2DD5-A856-036933E55060}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69797D8D-22D5-2DD5-A856-036933E55060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
