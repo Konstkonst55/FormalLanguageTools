@@ -1,0 +1,149 @@
+<UserControl x:Class="FormalLanguageTools.App.Views.FiniteAutomataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderBrush" Value="#D0D5DD" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="PanelTitleStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#182230" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="2,0,2,13">
+            <TextBlock Text="Конечные автоматы" FontSize="20" FontWeight="SemiBold" Foreground="#182230" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" MinWidth="330" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="1*" MinWidth="340" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.2*" MinHeight="210" />
+                    <RowDefinition Height="7" />
+                    <RowDefinition Height="0.8*" MinHeight="170" />
+                </Grid.RowDefinitions>
+                <Border BorderBrush="#DCE2EC" BorderThickness="1" Background="White" CornerRadius="8" Padding="9">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Margin="1,0,1,8">
+                            <TextBlock Text="Входная таблица (НКА)" Margin="0,0,20,0" Style="{StaticResource PanelTitleStyle}" />
+                            <Button DockPanel.Dock="Right" Content="Открыть" Command="{Binding OpenInputCommand}" />
+                        </DockPanel>
+                        <TextBox Grid.Row="1"
+                                 Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
+                                 AcceptsReturn="True"
+                                 AcceptsTab="True"
+                                 FontFamily="Consolas"
+                                 FontSize="12"
+                                 Padding="8"
+                                 VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 TextWrapping="NoWrap"
+                                 BorderBrush="#D0D5DD"
+                                 BorderThickness="1"
+                                 Background="#FCFCFD" />
+                        <WrapPanel Grid.Row="2" Margin="-5,9,-2,0" VerticalAlignment="Center">
+                            <Button Content="Сохранить ввод" Command="{Binding SaveInputCommand}" />
+                            <Button Content="Преобразовать и минимизировать" Command="{Binding ProcessCommand}" Background="#3157C8" Foreground="White" BorderBrush="#3157C8" FontWeight="SemiBold" />
+                            <Button Content="Показать трассировку" IsEnabled="{Binding CanShowTrace}" Click="ShowTraceButton_OnClick" />
+                        </WrapPanel>
+
+                        <CheckBox Grid.Row="3" Content="Сохранять трассировку" IsChecked="{Binding CaptureTrace, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,9,0,0" FontSize="11" />
+                    </Grid>
+                </Border>
+
+                <GridSplitter Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Transparent" Cursor="SizeNS" />
+
+                <Border Grid.Row="2" BorderBrush="#DCE2EC" BorderThickness="1" Background="White" CornerRadius="8" Padding="9">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Минимизированный ДКА" Style="{StaticResource PanelTitleStyle}" Margin="1,0,1,8" />
+                        <TextBox Grid.Row="1"
+                             Text="{Binding Path=OutputText, Mode=OneWay}"
+                             IsReadOnly="True"
+                             AcceptsReturn="True"
+                             FontFamily="Consolas"
+                             FontSize="12"
+                             Padding="8"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             TextWrapping="NoWrap"
+                             BorderBrush="#D0D5DD"
+                             BorderThickness="1"
+                             Background="#F9FAFB" />
+                        <Button Grid.Row="2" HorizontalAlignment="Right" Margin="0,9,0,0" Content="Сохранить результат" Command="{Binding SaveOutputCommand}" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" Cursor="SizeWE" />
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" MinHeight="210" />
+                    <RowDefinition Height="7" />
+                    <RowDefinition Height="*" MinHeight="210" />
+                </Grid.RowDefinitions>
+                <Border BorderBrush="#DCE2EC" BorderThickness="1" Background="White" CornerRadius="8" Padding="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Граф входного НКА" Style="{StaticResource PanelTitleStyle}" Margin="2,1,2,8" />
+                        <Grid Grid.Row="1" x:Name="InputGraphHost" Background="White" ClipToBounds="True">
+                            <TextBlock x:Name="InputGraphPlaceholder" Text="Введите корректную таблицу переходов" Foreground="#98A2B3" FontSize="12" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="16" IsHitTestVisible="False" Panel.ZIndex="10" />
+                        </Grid>
+                    </Grid>
+                </Border>
+                
+                <GridSplitter Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="Transparent" Cursor="SizeNS" />
+                
+                <Border Grid.Row="2" BorderBrush="#DCE2EC" BorderThickness="1" Background="White" CornerRadius="8" Padding="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Граф минимизированного ДКА" Style="{StaticResource PanelTitleStyle}" Margin="2,1,2,8" />
+                        <Grid Grid.Row="1" x:Name="OutputGraphHost" Background="White" ClipToBounds="True">
+                            <TextBlock x:Name="OutputGraphPlaceholder" Text="Граф появится после преобразования" Foreground="#98A2B3" FontSize="12" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="16" IsHitTestVisible="False" Panel.ZIndex="10" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Border Grid.Row="2" Margin="0,10,0,0" Background="#F8FAFC" BorderBrush="#E4E7EC" BorderThickness="1" CornerRadius="6" Padding="10,7">
+            <TextBlock Text="{Binding Status}" FontSize="11" Foreground="#475467" TextWrapping="Wrap" />
+        </Border>
+    </Grid>
+</UserControl>
