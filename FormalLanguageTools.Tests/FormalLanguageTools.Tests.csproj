@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FormalLanguageTools.ArithmeticParser\FormalLanguageTools.ArithmeticParser.csproj" />
+    <ProjectReference Include="..\FormalLanguageTools.FiniteAutomata\FormalLanguageTools.FiniteAutomata.csproj" />
     <ProjectReference Include="..\FormalLanguageTools.Shared\FormalLanguageTools.Shared.csproj" />
   </ItemGroup>
 </Project>
