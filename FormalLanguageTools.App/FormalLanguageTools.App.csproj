@@ -4,14 +4,21 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationIcon>Assets\FormalLanguageTools.ico</ApplicationIcon>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Resource Include="Assets\FormalLanguageTools.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+    <PackageReference Include="Microsoft.Msagl.Drawing" Version="1.1.6" />
+    <PackageReference Include="Msagl.WpfGraphControl" Version="1.2.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FormalLanguageTools.ArithmeticParser\FormalLanguageTools.ArithmeticParser.csproj" />
+    <ProjectReference Include="..\FormalLanguageTools.FiniteAutomata\FormalLanguageTools.FiniteAutomata.csproj" />
     <ProjectReference Include="..\FormalLanguageTools.Shared\FormalLanguageTools.Shared.csproj" />
   </ItemGroup>
 </Project>
