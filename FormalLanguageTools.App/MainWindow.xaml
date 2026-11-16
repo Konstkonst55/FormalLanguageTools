@@ -9,11 +9,11 @@
         MinHeight="650"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource WindowBackgroundBrush}">
-    
+
     <Window.Icon>
         <BitmapImage UriSource="pack://application:,,,/Assets/FormalLanguageTools.ico" />
     </Window.Icon>
-    
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -27,6 +27,9 @@
                 </TabItem>
                 <TabItem Header="Конечные автоматы" Padding="12,7">
                     <views:FiniteAutomataView x:Name="FiniteAutomataViewControl" />
+                </TabItem>
+                <TabItem Header="Магазинные автоматы" Padding="12,7">
+                    <views:PushdownAutomatonView x:Name="PushdownAutomatonViewControl" />
                 </TabItem>
             </TabControl>
         </Border>

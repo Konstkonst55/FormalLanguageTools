@@ -3,6 +3,8 @@ using FormalLanguageTools.App.Services;
 using FormalLanguageTools.App.ViewModels;
 using FormalLanguageTools.ArithmeticParser.Interfaces;
 using FormalLanguageTools.FiniteAutomata.Interfaces;
+using FormalLanguageTools.PushdownAutomata.Parsing;
+using FormalLanguageTools.PushdownAutomata.Simulation;
 
 namespace FormalLanguageTools.App;
 
@@ -17,5 +19,6 @@ public partial class MainWindow : Window
         InitializeComponent();
         ArithmeticParserViewControl.DataContext = new ArithmeticParserViewModel(parser, fileDialogService);
         FiniteAutomataViewControl.DataContext = new FiniteAutomataViewModel(automatonMinimizationService, automatonFileDialogService);
+        PushdownAutomatonViewControl.DataContext = new PushdownAutomatonViewModel(new PushdownAutomatonParser(), new PushdownAutomatonSimulator(), automatonFileDialogService);
     }
 }
