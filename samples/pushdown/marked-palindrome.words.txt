@@ -1,0 +1,7 @@
+#
+a#a
+b#b
+ab#ba
+ba#ab
+a#b
+ab#ab
