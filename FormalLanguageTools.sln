@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.FiniteAutomata", "FormalLanguageTools.FiniteAutomata\FormalLanguageTools.FiniteAutomata.csproj", "{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormalLanguageTools.PushdownAutomata", "FormalLanguageTools.PushdownAutomata\FormalLanguageTools.PushdownAutomata.csproj", "{FF9ACEA0-231D-4BF4-97C3-31AF13561A86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD5F4F90-6C7E-4C74-821D-DA06D8AD0742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9ACEA0-231D-4BF4-97C3-31AF13561A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9ACEA0-231D-4BF4-97C3-31AF13561A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9ACEA0-231D-4BF4-97C3-31AF13561A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9ACEA0-231D-4BF4-97C3-31AF13561A86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
